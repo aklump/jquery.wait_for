@@ -1,5 +1,5 @@
 name = "Wait For (an Element)"
 description = "Wait for an element to be ready on a page and fire a callback."
-version = "0.1.1"
+version = "0.1.2"
 author = Aaron Klump <sourcecode@intheloftstudios.com>
 homepage = "http://www.intheloftstudios.com/packages/js/jquery.wait_for"
