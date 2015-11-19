@@ -1,13 +1,13 @@
 /**
- * Wait For (an Element) jQuery JavaScript Plugin v0.1.1
- * http://www.intheloftstudios.com/packages/js/wait_for
+ * Wait For (an Element) jQuery JavaScript Plugin v0.1.2
+ * http://www.intheloftstudios.com/packages/js/jquery.wait_for
  *
  * Wait for an element to be ready on a page and fire a callback.
  *
  * Copyright 2015, Aaron Klump <sourcecode@intheloftstudios.com>
  * @license Dual licensed under the MIT or GPL Version 2 licenses.
  *
- * Date: Thu Nov 19 07:56:29 PST 2015
+ * Date: Thu Nov 19 07:57:38 PST 2015
  */
 
 /**
@@ -92,6 +92,6 @@ $.fn.waitFor = function() {
  *
  * @return {string}
  */
-$.fn.waitFor.version = function() { return '0.1.1'; };
+$.fn.waitFor.version = function() { return '0.1.2'; };
 
 })(jQuery, window);
