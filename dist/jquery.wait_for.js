@@ -1,5 +1,5 @@
 /**
- * Wait For (an Element) jQuery JavaScript Plugin v0.1.2
+ * Wait For (an Element) jQuery JavaScript Plugin v0.1.3
  * http://www.intheloftstudios.com/packages/js/jquery.wait_for
  *
  * Wait for an element to be ready on a page and fire a callback.
@@ -7,13 +7,13 @@
  * Copyright 2015, Aaron Klump <sourcecode@intheloftstudios.com>
  * @license Dual licensed under the MIT or GPL Version 2 licenses.
  *
- * Date: Thu Nov 19 07:57:38 PST 2015
+ * Date: Thu Nov 19 16:14:27 PST 2015
  */
 
 /**
  * Instantiate this plugin thus:
  * @code
-    $(document).waitFor('.some-element', function () {
+    $(document).waitFor('.some-element', function ($el) {
       console.log('ready');
     }, function () {
       console.log('fail');
@@ -26,15 +26,17 @@
       selector: '.some-element',
       expectedLength: 2,
       maxWait: 2000,
-      onReady: function () {
+      onReady: function ($el) {
         console.log('ready');
       },
-      onFail: function () {
+      onFail: function ($el) {
         console.log('fail');
       }
     });
  * @endcode
- * 
+ *
+ * onReady callbacks receive the jQuery object made from the selector and an
+ * object which has elapsed time, settings, etc.
  */
 ;(function($, window) {
 "use strict";
@@ -42,14 +44,18 @@
 $.fn.waitFor = function() {
   var _ = this,
       settings,
-      elapsed = 0,
       interval,
+      $el,
       ret;
+
+  var info = {
+    elapsed: 0
+  };
 
   var options =  {
     selector: '',
     expectedLength: 1,
-    maxWait: 500,
+    maxWait: 750,
     onReady: null,
     onFail: null,
     pollInterval: 20,
@@ -73,12 +79,12 @@ $.fn.waitFor = function() {
   }
 
   interval = window.setInterval(function () {
-    // if (_.length === settings.expectedLength) {
-    if ($(settings.selector).length === settings.expectedLength) {
+    $el = _.find(settings.selector);
+    if ($el.length === settings.expectedLength) {
       clearInterval(interval);
-      ret = settings.onReady instanceof Function ? settings.onReady() : null;
+      ret = settings.onReady instanceof Function ? settings.onReady($el, $.extend(info, {settings: settings})) : null;
     }
-    else if ((elapsed += settings.pollInterval) > settings.maxWait) {
+    else if ((info.elapsed += settings.pollInterval) > settings.maxWait) {
       clearInterval(interval);
       ret = settings.onFail instanceof Function ? settings.onFail() : null;
     }
@@ -92,6 +98,6 @@ $.fn.waitFor = function() {
  *
  * @return {string}
  */
-$.fn.waitFor.version = function() { return '0.1.2'; };
+$.fn.waitFor.version = function() { return '0.1.3'; };
 
 })(jQuery, window);
